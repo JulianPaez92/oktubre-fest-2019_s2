@@ -3,8 +3,8 @@ import marcas.*
 import personas.*
 import carpas.*
 
-test "Parte 1"{
-
+test "Oktubre Fest"{
+	"Parte 1"
 	graduacionReglamentaria.valor(6.4)
 	const hofbrau = new Roja(lupulo=10,pais=alemania) // GENERA 3 CERVEZAS
 	const hofbrauJarra = new Jarras(capacidad=0.5,marca=hofbrau)
