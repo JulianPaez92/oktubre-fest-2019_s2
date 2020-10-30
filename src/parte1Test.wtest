@@ -1,0 +1,63 @@
+import jarras.*
+import marcas.*
+import personas.*
+import carpas.*
+
+test "Parte 1"{
+
+	graduacionReglamentaria.valor(6.4)
+	const hofbrau = new Roja(lupulo=10,pais=alemania) // GENERA 3 CERVEZAS
+	const hofbrauJarra = new Jarras(capacidad=0.5,marca=hofbrau)
+	const corona = new Rubia(lupulo=15,pais=mexico,graduacion=10)
+	const coronaJarra = new Jarras(capacidad=1,marca=corona)
+	const guiness = new Negra(lupulo=10,pais=irlanda)
+	const guinessJarra = new Jarras(capacidad=1.5,marca=guiness)
+	const aleman2 = new Aleman(peso=50,musicaTradicional=true,aguante=150,nacionalidad=alemania)
+	aleman2.comprarJarra(hofbrauJarra)
+	aleman2.comprarJarra(coronaJarra)
+	aleman2.comprarJarra(guinessJarra)
+	//persona.cantidadAlcohol()
+	assert.equals(0.04,hofbrauJarra.cantidadAlcohol())
+	//persona.totalAlcohol()
+	assert.equals(0.236,aleman2.totalAlcohol())
+	//persona.estaEbria()
+	assert.notThat(aleman2.estaEbria())
+	//persona.leGusta(cerveza)
+	assert.that(aleman2.leGusta(corona))
+
+	"Parte 2"
+	const aleman1 = new Aleman(peso=50,musicaTradicional=true,aguante=150,nacionalidad=alemania)
+	const checo1 = new Checo(peso=80,aguante=70,nacionalidad=republicaCheca)
+	const belga1 = new Belga(peso=90,musicaTradicional=true,aguante=15,nacionalidad=belgica)
+	const carpa1 = new Carpas(limiteGente=10,marcaAVender=hofbrau)
+	const carpa2 = new Carpas(limiteGente=0,marcaAVender=hofbrau)
+	//persona.personaQuiereEntrar(carpa)
+	assert.notThat(checo1.personaQuiereEntrar(carpa1))
+	assert.that(belga1.personaQuiereEntrar(carpa1))
+	assert.that(aleman1.personaQuiereEntrar(carpa1))
+	//carpa.personaPuedeEntrar(persona)
+	assert.that(carpa1.personaPuedeEntrar(checo1))
+	assert.that(carpa1.personaPuedeEntrar(belga1))
+	assert.that(carpa1.personaPuedeEntrar(aleman1))
+	//persona.puedeEntrar(carpa)
+	//prueba carpa con "limite = 0"
+	assert.notThat(aleman1.puedeEntrar(carpa2))
+	//prueba carpa con "limite = 10"
+	assert.notThat(checo1.puedeEntrar(carpa1))
+	assert.that(belga1.puedeEntrar(carpa1))
+	assert.that(aleman1.puedeEntrar(carpa1))
+	//carpa.ingresarACarpa(persona)
+	carpa1.ingresarACarpa(aleman1)
+	carpa1.ingresarACarpa(belga1)
+	assert.throwsException({carpa1.ingresarACarpa(checo1)})
+	assert.equals(#{belga1,aleman1},carpa1.personasAdentro())
+	//carpa.servirJarra(persona,cantidad)
+	carpa1.servirJarra(aleman1,1)
+	carpa1.servirJarra(belga1,2)
+	assert.throwsException({carpa1.servirJarra(checo1,2)})
+	//carpa.cantidadEbriosEmpedernidos()
+	assert.equals(2,carpa1.cantidadEbriosEmpedernidos())
+	//persona.esPatriota()
+	assert.that(aleman1.esPatriota())
+	assert.notThat(belga1.esPatriota())
+}
